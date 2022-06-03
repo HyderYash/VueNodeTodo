@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar color="deep-purple accent-4" dense dark>
+    <v-app-bar dense dark>
       <v-app-bar-nav-icon
         @click.stop="drawer = !drawer"
         v-if="isUserLoggedIn"

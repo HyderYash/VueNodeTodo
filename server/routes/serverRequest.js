@@ -242,6 +242,29 @@ router.post(config.CHECKUSERWITHPASS_API, async (req, res) => {
 // CHANGE PASSWORD ROUTES //
 //! AUTHENTICATION APIS END !//
 
+//! TODO APP APIS START !//
+router.post(config.GET_TODOSTATS, async (req, res) => {
+  try {
+    const { USER_ID, CRITERIA } = req.body;
+    hf.promiseContainer(getTaskIDArrByUID, [USER_ID, CRITERIA]).then(
+      (result) => {
+        console.log(result);
+        return res.json({
+          status: "Success",
+          message: "Records...",
+          records: result,
+        });
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      error: error,
+    });
+  }
+});
+//! TODO APP APIS END !//
+
 //* Helper Functions with DB Interactions START *//
 const updateUserTokenInDB = async (USER_ID) => {
   try {
@@ -259,6 +282,61 @@ const updateUserTokenInDB = async (USER_ID) => {
   } catch (err) {
     console.log(err);
   }
+};
+const getTaskIDArrByUID = async (USER_ID, CRITERIA) => {
+  try {
+    var resArr = [{}];
+    const sql = `SELECT ID, TASK_NAME FROM ${config.TODOTASKLIST_TB} WHERE USER_ID = ${USER_ID} ORDER BY TASK_NAME;`;
+    console.log(sql);
+    const result = await db.get_multiple_tables_records(sql);
+    const parseRes = JSON.parse(JSON.stringify(result));
+
+    for (var taskArr of Object.keys(parseRes)) {
+      let { ID, TASK_NAME } = parseRes[taskArr];
+      let sqlQueryPrefix = `SELECT t.ID as taskId,tr.ID as taskRatingId, tr.RATING_DATE, tr.TASK_RATING FROM ${config.TODOTASKLIST_TB} as t, ${config.TODOTASKRATING_TB} as tr WHERE t.ID = tr.TASK_ID AND t.USER_ID = tr.USER_ID AND t.USER_ID = ${USER_ID} AND t.ID = ${ID}`;
+      var getDateInterval = getNoOfDaysByCriteria(CRITERIA);
+      let sqlDateCriteria;
+      if (getDateInterval > 0) {
+        sqlDateCriteria = ` AND DATE(tr.RATING_DATE) > (NOW() - INTERVAL ${getDateInterval} DAY)`;
+      } else {
+        sqlDateCriteria = "";
+      }
+
+      let sqlQuerySuffix = ` ORDER BY tr.RATING_DATE ASC`;
+      let sqlQuery = sqlQueryPrefix + sqlDateCriteria + sqlQuerySuffix;
+      console.log(sqlQuery);
+      let res = await db.get_multiple_tables_records(sqlQuery);
+      let myRes = JSON.parse(JSON.stringify(res));
+      if (resArr[0][TASK_NAME]) {
+        resArr[0][TASK_NAME].push({ TASK_DETAIL: myRes });
+      } else {
+        resArr[0][TASK_NAME] = [{ TASK_DETAIL: myRes }];
+      }
+      resArr[0][TASK_NAME].push({ RATING_AVG: 0 });
+    }
+    return resArr;
+  } catch (err) {
+    console.log(err);
+  }
+};
+const getNoOfDaysByCriteria = (CRITERIA) => {
+  var days;
+  switch (CRITERIA) {
+    case "W":
+      days = 7;
+      break;
+    case "M":
+      days = 30;
+      break;
+    case "Y":
+      days = 365;
+      break;
+
+    default:
+      days = 0;
+      break;
+  }
+  return days;
 };
 //* Helper Functions with DB Interactions END *//
 

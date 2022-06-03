@@ -1,5 +1,5 @@
 const templateData = {
-  projName: "Vue Node Starter Template",
+  projName: "Todo App",
   headerComp: {
     homeTooltip: "Home",
     homeIcon: "mdi-home",

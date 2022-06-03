@@ -52,8 +52,8 @@ export default {
     loading: false,
     showPassword: false,
     login_valid: true,
-    login_name: "",
-    login_password: "",
+    login_name: "yash",
+    login_password: "yash@1234",
     login_nameRules: [
       (v) => !!v || tData.username.emptyErr,
       (v) => (v && v.length <= 15) || tData.username.exceedErr,

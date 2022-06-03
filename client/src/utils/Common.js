@@ -261,6 +261,29 @@ const cLog = (compName = "", funcName = "", overrideConfigSetting = false) => {
 };
 //* THIS WILL LOG LIFECYCLE FLOW IN CONSOLE *//
 
+function buildCurrentDateFormat(date) {
+  var monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  var today = new Date(date);
+  var dd = today.getDate();
+  var mm = monthNames[today.getMonth()];
+  var yyyy = today.getFullYear().toString().slice(-2);
+  today = `${dd} ${mm} ${yyyy}`;
+  return today;
+}
+
 export {
   fetchAPIData,
   logoutUserAndClearSession,
@@ -272,4 +295,5 @@ export {
   returnStoredDebugInfo,
   debugComponentKeyChange,
   cLog,
+  buildCurrentDateFormat,
 };

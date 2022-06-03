@@ -5,6 +5,11 @@ const nodemailer = require("nodemailer");
 const config = require("../config/config");
 
 class HelperFun {
+  promiseContainer = (customfnc, funcParaArr) => {
+    return new Promise((resolve) => {
+      resolve(customfnc.apply(this, funcParaArr));
+    });
+  };
   encryptPass = (rawPass) => {
     const hashPwd = crypto.createHash("sha1").update(rawPass).digest("hex");
     return hashPwd;

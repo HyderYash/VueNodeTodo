@@ -1,12 +1,12 @@
 
-# Vue Node Starter Template
+# Todo App
 
 Use this repository to get all authentications done and continue to work on internal pages
 
 
 ## Installation
 
-Install Vue Node Starter Template with npm
+Install Todo App with npm
 
 ```bash
   cd client

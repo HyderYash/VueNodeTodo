@@ -23,12 +23,9 @@ export const CHANGEPASSWORD_API = `${AUTH_API}/changepassword`;
 export const CHECKUSERWITHPASS_API = `${AUTH_API}/checkuserwithpass`;
 //* -----------------THIS IS BEING IS USED FOR AUTHENTICATION APIS------------ *//
 
-//* ----------- THIS IS BEING IS USED FOR SUPER ADMIN APIS ----------- *//
-export const SUPERADMIN_API = "/superadmin";
-export const GETSHOPKEEPERS_API = `${SUPERADMIN_API}/getshopkeepers`;
-export const ADDSHOPKEEPER_API = `${SUPERADMIN_API}/addshopkeeper`;
-export const EDITSHOPKEEPER_API = `${SUPERADMIN_API}/editshopkeeper`;
-export const SHOPKEEPERPAYLIST_API = `${SUPERADMIN_API}/getshopkeeperpaylist`;
-//* ----------- THIS IS BEING IS USED FOR SUPER ADMIN APIS ----------- *//
+//* ----------- THIS IS BEING IS USED FOR TODO APIS ----------- *//
+export const TODO_API = "/todo";
+export const GET_TODOSTATS = `${TODO_API}/gettodostats`;
+//* ----------- THIS IS BEING IS USED FOR TODO APIS ----------- *//
 
 //? API CALL PREFIX END ?//

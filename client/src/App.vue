@@ -14,3 +14,14 @@ export default {
   components: { Header, Footer },
 };
 </script>
+<style>
+.v-progress-linear__content {
+  justify-content: left !important;
+}
+.v-progress-linear__background {
+  background-color: #808080 !important;
+}
+.progressBarContainer {
+  padding: 10px 0px 0px 0px !important;
+}
+</style>
